@@ -1,3 +1,83 @@
+PASOS PARA LA CONFIGURACIÓN EN EL NODO 
+git clone https://github.com/tuusuario/blockchain-dashboard.git
+cd blockchain-dashboard
+npm install
+npm run dev
+ AHORA ESTAS SON LAS RUTAS DE MI LOCAL EN EL APP 
+ ▲ Next.js 16.2.1 (Turbopack)
+- Local:   http://localhost:3001
+- Network: http://<tu-ip-local>:3001
+- 
+  ESTAS SON los edpoints principales 
+/transactions	POST	Registrar una nueva transacción académica
+/mine	POST	Minar un nuevo bloque en la cadena
+/chain	GET	Obtener la cadena de bloques local
+/nodes/register	POST	Registrar un nodo en la red
+/nodes/list	GET	Listar los nodos conectados
+/nodes/resolve	GET	Resolver conflictos entre nodos
+Ejemplo de las transacciones
+curl -X POST http://localhost:3001/api/transactions \
+-H "Content-Type: application/json" \
+-d '{
+  "persona_id": "11111111-1111-1111-1111-111111111111",
+  "institucion_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+  "programa_id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+  "titulo_obtenido": "Ingeniero en Sistemas Computacionales",
+  "fecha_fin": "2023-05-30"
+}'
+
+la ruta de la mina 
+curl -X POST http://localhost:3001/api/mine
+
+la ruta que tiene para el nodo 
+curl http://localhost:3001/api/chain
+
+curl -X POST http://localhost:3001/api/nodes/register \
+-H "Content-Type: application/json" \
+-d '{"url": "http://localhost:3002"}'
+
+esta es la ruta que tiene de lustar los nodos 
+curl http://localhost:3001/api/nodes/list
+
+la ruta que tiene en el resolve 
+curl http://localhost:3001/api/nodes/resolve
+
+📑 Documentación OpenAPI
+
+La API está descrita en el archivo openapi.json.
+Puedes importar este archivo en Swagger UI, Postman o Redoc para visualizar y probar los endpoints.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
