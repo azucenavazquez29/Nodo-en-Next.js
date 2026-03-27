@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Blockchain Académica API",
+    "version": "1.0.0",
+    "description": "API para registrar transacciones académicas, minar bloques y gestionar nodos."
+  },
+  "servers": [
+    { "url": "http://localhost:3001/api" }
+  ],
+  "paths": {
+    "/transactions": {
+      "post": {
+        "summary": "Registrar transacción",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "persona_id": { "type": "string", "format": "uuid" },
+                  "institucion_id": { "type": "string", "format": "uuid" },
+                  "programa_id": { "type": "string", "format": "uuid" },
+                  "titulo_obtenido": { "type": "string" },
+                  "fecha_fin": { "type": "string", "format": "date" }
+                },
+                "required": ["persona_id", "institucion_id", "programa_id", "titulo_obtenido"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transacción registrada",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "transaccion": { "type": "object" } } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mine": {
+      "post": {
+        "summary": "Minar bloque",
+        "responses": {
+          "200": {
+            "description": "Bloque minado",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "bloque": { "type": "object" } } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chain": {
+      "get": {
+        "summary": "Obtener cadena local",
+        "responses": {
+          "200": {
+            "description": "Cadena de bloques",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cadena": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nodes/register": {
+      "post": {
+        "summary": "Registrar nodo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "url": { "type": "string", "format": "uri" } },
+                "required": ["url"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Nodo registrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nodos": {
+                      "type": "array",
+                      "items": { "type": "object", "properties": { "url": { "type": "string" } } }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Error en el registro" }
+        }
+      }
+    },
+    "/nodes/list": {
+      "get": {
+        "summary": "Listar nodos",
+        "responses": {
+          "200": {
+            "description": "Lista de nodos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nodos": {
+                      "type": "array",
+                      "items": { "type": "object", "properties": { "url": { "type": "string" } } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nodes/resolve": {
+      "get": {
+        "summary": "Resolver conflictos",
+        "responses": {
+          "200": {
+            "description": "Cadena actualizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cadena": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

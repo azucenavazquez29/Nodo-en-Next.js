@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Blockchain Académica API
+  version: 1.0.0
+  description: API para registrar transacciones académicas, minar bloques y gestionar nodos.
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /transactions:
+    post:
+      summary: Registrar transacción
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                persona_id:
+                  type: string
+                institucion_id:
+                  type: string
+                programa_id:
+                  type: string
+                titulo_obtenido:
+                  type: string
+                fecha_fin:
+                  type: string
+                  format: date
+              required:
+                - persona_id
+                - institucion_id
+                - programa_id
+                - titulo_obtenido
+      responses:
+        '200':
+          description: Transacción registrada
+
+  /mine:
+    post:
+      summary: Minar bloque
+      responses:
+        '200':
+          description: Bloque minado
+
+  /chain:
+    get:
+      summary: Obtener cadena local
+      responses:
+        '200':
+          description: Cadena de bloques
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /nodes/register:
+    post:
+      summary: Registrar nodo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+              required:
+                - url
+            examples:
+              nodo1:
+                summary: Nodo local en puerto 3001
+                value:
+                  url: http://localhost:3001
+              nodo2:
+                summary: Nodo local en puerto 3002
+                value:
+                  url: http://localhost:3002
+      responses:
+        '200':
+          description: Nodo registrado
+        '400':
+          description: Error en el registro
+
+  /nodes/list:
+    get:
+      summary: Listar nodos
+      responses:
+        '200':
+          description: Lista de nodos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  /nodes/resolve:
+    get:
+      summary: Resolver conflictos
+      responses:
+        '200':
+          description: Cadena actualizada
